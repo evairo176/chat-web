@@ -7,7 +7,7 @@ const RegisterSchema = Yup.object({
     [Yup.ref("password"), null],
     "Passwords must match"
   ),
-  image: Yup.mixed().required("File is required"),
+  //   image: Yup.mixed().required("File is required"),
 });
 
 export { RegisterSchema };

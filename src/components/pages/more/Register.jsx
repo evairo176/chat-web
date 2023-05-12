@@ -20,7 +20,7 @@ function Register() {
     },
     onSubmit: async (values) => {
       // console.log(values);
-      dispatch(RegisterAction(values, navigate));
+      dispatch(await RegisterAction(values, navigate));
     },
     validationSchema: RegisterSchema,
   });
@@ -28,10 +28,7 @@ function Register() {
   const fileHandle = async (e) => {
     // console.log(e.target.id);
     if (e.target.files.length !== 0) {
-      await formik.setFieldValue("image", {
-        ...formik.values.image,
-        [e.target.name]: e.target.files[0],
-      });
+      await formik.setFieldValue("image", e.target.files[0]);
     }
     const reader = new FileReader();
     reader.onload = () => {
