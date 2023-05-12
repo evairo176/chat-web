@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function index() {
+function Login() {
   return (
     <div className="register">
       <div className="card">
@@ -47,4 +47,4 @@ function index() {
   );
 }
 
-export default index;
+export default Login;
