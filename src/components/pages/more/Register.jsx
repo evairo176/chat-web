@@ -19,7 +19,6 @@ function Register() {
       image: "",
     },
     onSubmit: async (values) => {
-      // console.log(values);
       dispatch(await RegisterAction(values, navigate));
     },
     validationSchema: RegisterSchema,
