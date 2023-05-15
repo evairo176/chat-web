@@ -7,7 +7,12 @@ const RegisterSchema = Yup.object({
     [Yup.ref("password"), null],
     "Passwords must match"
   ),
-  //   image: Yup.mixed().required("File is required"),
+  image: Yup.mixed().required("File is required"),
 });
 
-export { RegisterSchema };
+const LoginSchema = Yup.object({
+  email: Yup.string().required("Email is required").email("Invalid email"),
+  password: Yup.string().required("Password is required"),
+});
+
+export { RegisterSchema, LoginSchema };

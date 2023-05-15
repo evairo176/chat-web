@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const GlobalSlices = createSlice({
   name: "global",
-  initialState: {},
+  initialState: {
+    isLoading: false,
+  },
   reducers: {
     globalAction: (state, action) => {
       switch (action.payload.type) {

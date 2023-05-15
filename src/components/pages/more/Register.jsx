@@ -1,14 +1,17 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { RegisterSchema } from "../../../utils/FormikSchema";
-import { RegisterAction } from "../../../redux/action/Register";
+import { RegisterAction } from "../../../redux/controller/Register";
+import ButtonSubmit from "../../atoms/ButtonSubmit";
 
 function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loadImage, setLoadImage] = useState("");
+  const storeData = useSelector((store) => store?.global);
+  const { isLoading } = storeData;
 
   const formik = useFormik({
     initialValues: {
@@ -28,18 +31,19 @@ function Register() {
     // console.log(e.target.id);
     if (e.target.files.length !== 0) {
       await formik.setFieldValue("image", e.target.files[0]);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setLoadImage(reader.result);
+      };
+
+      reader.readAsDataURL(e.target.files[0]);
     }
-    const reader = new FileReader();
-    reader.onload = () => {
-      setLoadImage(reader.result);
-    };
-    reader.readAsDataURL(e.target.files[0]);
   };
   return (
     <div className="register">
       <div className="card">
         <div className="card-header">
-          <h3>Register</h3>
+          <h3>Register {isLoading ? "jalan" : "kosong"}</h3>
         </div>
         <div className="card-body">
           <form onSubmit={formik.handleSubmit}>
@@ -127,7 +131,7 @@ function Register() {
             <div className="form-group">
               <div className="file-image">
                 <div className="image">
-                  {loadImage ? <img src={loadImage} alt="" /> : ""}
+                  {loadImage ? <img src={loadImage && loadImage} alt="" /> : ""}
                 </div>
                 <div className="file">
                   <label htmlFor="image">Select Image</label>
@@ -151,7 +155,11 @@ function Register() {
               ""
             )}
             <div className="form-group">
-              <input type="submit" value="register" className="btn" />
+              <ButtonSubmit
+                type="submit"
+                isLoading={isLoading}
+                title="register"
+              />
             </div>
 
             <div className="form-group">
